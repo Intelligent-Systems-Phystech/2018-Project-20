@@ -1,0 +1,179 @@
+\documentclass[12pt,twoside]{article}
+\usepackage{jmlda}
+%\NOREVIEWERNOTES
+\title
+    [Сравнение качества end-to-end обучаемых моделей в задаче ответа на вопросы в диалоге с учетом контекста] % Краткое название; не нужно, если полное название влезает в~колонтитул
+    {Сравнение качества end-to-end обучаемых моделей в задаче ответа на вопросы в диалоге с учетом контекста}
+\author
+    {Агафонов~A.\,М, Рякин~И.\,С., Хохлов~И.\,Ю., Литвиненко~В.\,В., Великовский~Н.\,А., Ануфриенко~О.\,Д.} % основной список авторов, выводимый в оглавление
+
+\email
+    {frizman04@gmail.com, ryakin.is@phystech.edu, khokhlov.iyu@gmail.com, vladimir.litvinenko.1997@gmail.com, velik.nikita@gmail.com, oleg.anufriyenko@phystech.edu }
+\organization
+    {Moscow Institute of Physics and Technology}
+\abstract
+    {В работе рассматривается вопросно-ответная система (QA). Задан фрагмент текста и несколько последовательных вопросов. Ответы на первые N вопросов известны. Нужно сформировать ответ на N+1 вопрос и указать непрерывный промежуток в тексте заданного фрагмента текста. Исследование проводится на новых данных , для которых на данный момент имеется только базовый алгоритм. В работе изучается возможность улучшения  этого базового алгоритма. Для этого предлагается изучить существующие механизмы учета контекста (k-ctx, append, etc) и исследовать возможность их добавления в другие модели (R-NET, DrQA), либо предложить собственные для повышения качества по мере F1. Для изучения поведения модели используется attention visualization, обучаемых эмбеддингов, а также анализ ошибочных ответов.
+
+
+
+\bigskip
+\textbf{Ключевые слова}: \emph {контекст, machine comprehension, вопросно-ответная система (QA), нейросеть, FLOW mechanism }.}
+
+\begin{document}
+\maketitle
+\section{Введение}
+В работе решается задача ответа на вопросы с учетом контекста и учетом хода диалога. Используется датасет QuAC \cite{quac}. Он содержит 14K QA диалогов(100K пар вопрос-ответ). Датасет представляет собой диалог между учителем и учеником. Считается, что учитель знает какую-то информацию, например статью с Wikipedia, а ученик, в свою очередь, задает вопросы по этой статье. Вопросы могут быть с множественным выбором, без ответа, основанные на диалоге и т.д. В данном разделе в первую очередь представлены обзоры на релевантные алгоритмы данной тематики, решающие данную задачу на различных данных. Примерами являются подходы \cite{bidaf, drqa, r-net, flowqa}
+\subsection{}
+  В работе Bi-Directional Attention Flow for Machine Comprehension \cite{bidaf} используется датасет SQuAD \cite{squad}. Решается задача получения ответа на вопрос с учетом контекста. В отличие от других алгоритмов в этой работе используется современный алгоритм Bi-Directional Attention Flow. Обычно с помощью Attention \cite{rectrends2018} определяют небольшую часть контекста и сосредотачиваются на ней. В статье \cite{bidaf} описывается представление контекста в многоуровневой иерархии. 
+\subsection{}
+В работе Reading Wikipedia to Answer Open-Domain Questions \cite{drqa} рассматривается задача ответа на вопросы-факты по открытым источникам данных на примере Wikipedia. Для обучения модели использользовались Wikipedia, SQuAD \cite{squad}, CuratedTREC, WebQuestions, WikiMovies. Алгоритм состоит из двух этапов. Первый по заданному вопросу ищет статью (статьи), в которой далее требуется искать ответ. Реализовано при помощи TF-IDF меры применительно к биграммам (использовано хеширование для ускорения). Второй по заданному вопросу ищет в статье, найденной в первом пункте, промежуток, содержащий нужный ответ. В работе можно выделить такие интересные особенности как то, что помимо GloVe embedding \cite{glove} в векторе признаков для слова добавляется еще 3 бинарных признака наличия конкретного токена в вопросе (полностью совпадает, совпадает в нижнем регистре, совпадает в нормальной форме) и часть речи, тип именованной сущности, частота появления в параграфе.   
+\subsection{}
+Наиболее релевантный алгоритм для используемого в нашем исследовании датасета на сегодняшний день -  FlowQA \cite{flowqa}. В статье предложено решение учета предыдущих вопросов и ответов: отвечая на N-ый вопрос, алгоритм опирается не только на изначальный контекст, но и на предыдущие N-1 вопрос-ответы, - контекст разговора постоянно обновляется. Это позволяет отвечать на такие простые вопросы как “Где?” и “Когда?”, исходя из информации, которая была представлена ранее. Процедура получения ответа выполняется в три шага. Во-первых, вопрос и контекст кодируются с помощью GloVe embedding \cite{glove}. Во-вторых, полученные вектора подаются на вход LSTM \cite{lstm} с использованием Attention \cite{rectrends2018}. В-третьих, полученные вектора обрабатываются с целью получения вероятности для слова быть началом/концом ответа на поставленный вопрос.  
+
+С целью сравнения результатов полученных методом, предложенным в этой работе, и результатов, представленных в QuAC \cite{quac}, проведен вычислительный эксперимент на исходных данных QuAC \cite{quac}.
+
+\section{Описание алгоритма}
+В этом разделе мы опишем подход к обучению системы ответов на вопросы с контекстом. На первом этапе на основе контекста из статьей ивзлекается самый близкий параграф, который далее передается в вопросно-ответную модель. Далее вопросно-ответная модель находит в тексте параграфа начало и конец ответа.
+
+\subsection{Выбор параграфа}
+Наша модель выбора параграфа выбирает несколько параграфов с самым маленьким TF-IDF косинусным расстоянием от вопроса.
+ 
+\subsection{Описание модели}
+Наша модель состоит из следующих слоев:
+
+\textbf{Эмбеддинги:}
+Мы векторизуем слова при помощи предобученных эмбеддингов. Мы также векторизуем отдельные символы в 20-мерные обучаемые векторы, которые после проходят через CNN и Max-pooling. Далле мы производим конкатенацию эмбеддингов слов и символов и передаем их на следующий слой.
+
+
+ \textbf{Предобработка:}
+Далее используется двунаправленная GRU \cite{gru} для преобразования эмбеддингов в контекстно-ориентированные эмбеддинги.
+
+
+\textbf{Attention:}
+Двунаправленная модель attention из модели BiDAF \cite{bidaf} используется для представления контекста с учетом запроса. Обозначим ветор контекстного слова под номером $i$ как $h_i$, а $j$-ый вектор вопроса как $q_j$ и длину вопроса и контекста $n_q$ и $n_c$ соответственно. Опишем attention между $h_i$ и $q_j$ следующим образом:
+\[
+ a_{ij} = w_1 \cdot h_i + w_2\cdot q_j + w_3\cdot (h_i \odot q_j)
+\]
+где $w_1, w_2$ и $w_3$ обучаемые параметры. После этого получаем новые вектора контекста $c_i$:
+\[
+ p_{ij} = \frac{e^{a_{ij}}} {\sum\limits_{j'=1}^{n_q} e^{a_{ij'}}}
+\]
+\[
+ c_i = \sum\limits_{j=1}^{n_q} q_j p_{ij}
+\]
+Также мы рассчитваем вектор запроса-контекста $q_c$:
+\[
+ m_i = \max\limits_{1\leqslant j \leqslant n_q} a_{ij}
+\]
+\[
+ p_i = \frac{e^{m_i}}{\sum\limits_{i=1}^{n_c} e^{m_i}}
+\]
+\[
+ q_c = \sum\limits_{i=1}^{n_c} h_i p_i
+\]
+Финальный вектор, полученный для каждого токена, собирается путем конкатенации $h_i, c_i, h_i, h_i \odot c_i$ и $q_c \odot c_i$. Полученный вектор мы далее пропускаем через линейный слой и нелинейную активацию ReLU.
+
+
+\textbf{Self-Attention:}
+Следующим шагом мы используем residual слой Self-attention \cite{self-att}. Входной вектор пропускается через двунаправленную GRU \cite{gru}. Далее мы применяем точно такой же механизм attention, но теперь с самим собой. В данном случае мы не используем вектор запроса-контекста $(q_c)$ и выставляем $a_{if} = -inf$, если $i=j$.
+
+Как и ранее, пропускаем сконкатенированный вектор через линейный слой и ReLU. Так как данный слой  является residual, то мы складываем его вход и выход.
+
+\textbf{Предсказание:}
+На последнем шаге используется двунаправленная GRU \cite{gru} и линейный слой, которые возвращают score начала ответа для каждого токена. Внутренние состояния конкатенируются с входными значениями, пропускаются через еще одну двунаправленную GRU и линейный слой, возвращая score конца ответа для каждого токена. 
+
+Все полученые score мы пропускаем через слой Softmax и получаем $P_{start}(i)$ - вероятность, что i-й токен является началом ответа и $P_{end}(j)$ - вероятность, что j-й токен является концом ответа. Важно отметить, что сглаживание происходит по всем параграфам, полученным на первом этапе алгоритма. За правильный ответ мы принимаем:
+\[
+ (i_{start}, j_{end}) = \underset{(i, j)}{argmax}( P_{start}(i) + P_{end}(j) | i \leq j \leq i+17)
+\]
+
+\textbf{Dropout:}
+Мы также использовали Dropout, который случайным образом обращал в ноль некоторые внутренние состояния на протяжении всего обучения. Dropout применялся ко всем GRU \cite{gru}, эмбеддингам слов, а также ко всем входам механизмов attention с частотой 0.2.
+
+\section{Эксперимент}
+Для обучения нашей модели мы выбрали выборку QuAC \cite{quac}. Датасет содержит 98,407 пар вопрос-ответ из 13,594 диалогов. Каждый диалог содержит от 4 до 12 вопросов. Диалоги были произведены на 3,611 уникальных статьях из Википедии.
+Реализованная нами версия алгоритма обучалась батчами размера 45 c оптимизатором Adadelta \cite{adadelta}. В реализации алгоритма использовались 300-мерные GloVe \cite{glove} эмбеддинги слов. Мы использовали рамерность 100 для каждой GRU \cite{gru} и 200 для каждого линейного слоя после механизма attention. Во время обучения мы поддерживали экспоненциальную скользящую среднюю весов со скоростью затухания 0,999. Во время тестирования мы использовали усредненные веса.
+Наша модель обучалась на 80\% выборки в течение 100 эпох. Полученный результат можно наблюдать на таблице \ref{Results}.
+
+\begin{table}[t]%\small
+    \caption{F1 мера моделей и человека на QuAC.}
+    \label{Results}
+    \centering\medskip%\tabcolsep=2pt%\small
+    \begin{tabular}{lrrr}
+    \headline
+        Модель
+            & \multicolumn{1}{c}{F1} \\
+    \headline
+        {\tt BiDAF++}
+            & $60.1$\\
+        {\tt FlowQA}
+            & $64.1$ \\
+        {\tt Наше решение}
+            & $63.7$ \\
+        {\tt Человек}
+            & $80.8$ \\
+    \hline
+    \end{tabular}
+\end{table}
+
+\section{Заключение}
+В работе была предложена модель, базирующаяся на решении BiDAF \cite{bidaf}, для решения задачи ответа на вопросы в диалоге с учетом контекста. Данная модель обучалась на актуальной выборке QuAC \cite{quac}. С целью сравнения качества ответов модели с уже существующими решениями был проведен эксперимент, демонстрирующий повышенное качество ответов по сравнению с базовым алгоритмом BiDAF \cite{bidaf}. Хотя наш подход обеспечивает значительный прирост производительности, все еще есть возможности для улучшения.
+В будущем мы хотели бы исследовать еще более эффективные методы нахождения ответов на вопросы с учетом контекста, основываясь на решении FlowQA \cite{flowqa}.
+
+\begin{thebibliography}{1}
+\bibitem{quac}
+    \BibAuthor{Eunsol Choi, He He, Wen-tau Yih, Yejin Choi, Mohit Iyyer, Mark Yatskar, Percy Liang, Luke Zettlemoyer}
+    \BibTitle{QuAC : Question Answering in Context}~//
+    \BibUrl{}{https://arxiv.org/pdf/1808.07036.pdf}, 2018
+\bibitem{bidaf}
+    \BibAuthor{Minjoon Seo, Aniruddha Kembhavi, Ali Farhadi, Hananneh Hajishirzi}
+    \BibTitle{Bi-Directional Attention Flow for Machine Comprehension}~//
+    \BibJournal{ICLR}, 2017
+\bibitem{drqa}
+    \BibAuthor{Danqi Chen, Adam Fisch, Jason Weston, Antoine Bordes}
+    \BibTitle{Reading Wikipedia to Answer Open-Domain Questions}~//
+    \BibUrl{https://arxiv.org/pdf/1704.00051.pdf}, 2017
+\bibitem{r-net}
+    \BibAuthor{Natural Language Computing Group, Microsoft Research Asia}
+    \BibTitle{R-NET: Machine Reading Comprehension with Self-Matching Networks}~//
+    \BibUrl{https://www.microsoft.com/en-us/research/wp-content/uploads/2017/05/r-net.pdf}, 2017
+\bibitem{flowqa}
+    \BibAuthor{Hsin-Yuan Huang, Eunsol Choi, Wen-tau Yih}
+    \BibTitle{FlowQA: Grasping Flow in History for Conversational Machine Comprehension}~//
+    \BibUrl{https://arxiv.org/pdf/1810.06683.pdf}, 2018
+\bibitem{squad}
+    \BibAuthor{Pranav Rajpurkar, Jian Zhang, Konstantin Lopyrev, and Percy Liang}
+    \BibTitle{SQuAD: 100,000+ questions for machine comprehension of text}~//
+    \BibJournal{Proceedings of the Conference on Empirical Methods in Natural Language Processing}, 2016
+\bibitem{rectrends2018}
+    \BibAuthor{Tom Young, Devamanyu Hazarika, Soujanya Poria, Erik Cambria}
+    \BibTitle{Recent Trends in Deep Learning Based Natural Language Processing}~//
+    \BibUrl{https://arxiv.org/pdf/1708.02709v8.pdf}, 2018
+\bibitem{glove}
+    \BibAuthor{Jeffrey Pennington, Richard Socher, Christopher D. Manning}
+    \BibTitle{GloVe: Global Vectors for Word Representation}~//
+    \BibUrl{https://nlp.stanford.edu/pubs/glove.pdf}, 2014
+\bibitem{lstm}
+    \BibAuthor{Sepp Hochreiter and Jurgen Schmidhuber}
+    \BibTitle{Long short-term memory}~//
+    \BibJournal{Neural Computation, 9(8): 1735–1780}, 1997
+\bibitem{gru}
+    \BibAuthor{Kyunghyun Cho, Bart van Merrienboer, Caglar Gulcehre, Dzmitry Bahdanau, Fethi Bougares, Holger Schwenk, Yoshua Bengio}
+    \BibTitle{Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation}~//
+    \BibUrl{https://arxiv.org/pdf/1406.1078v3.pdf}, 2014
+\bibitem{self-att}
+    \BibAuthor{Tao Shen, Tianyi Zhou, Guodong Long, Jing Jiang, Shirui Pan, Chengqi Zhang}
+    \BibTitle{DiSAN: Directional Self-Attention Network for RNN/CNN-Free Language Understanding}~//
+    \BibUrl{https://arxiv.org/pdf/1709.04696.pdf}, 2017
+\bibitem{adadelta}
+    \BibAuthor{Matthew D. Zeiler}
+    \BibTitle{ADADELTA: An Adaptive Learning Rate Method}~//
+    \BibUrl{https://arxiv.org/pdf/1212.5701.pdf}, 2012
+\end{thebibliography}
+
+% Решение Программного Комитета:
+%\ACCEPTNOTE
+%\AMENDNOTE
+%\REJECTNOTE
+% ху
+\end{document}
