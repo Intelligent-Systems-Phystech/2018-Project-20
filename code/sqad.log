@@ -1,0 +1,97 @@
+2018-12-10 05:26:27.660 DEBUG in 'urllib3.connectionpool'['connectionpool'] at line 205: Starting new HTTP connection (1): files.deeppavlov.ai:80
+2018-12-10 05:26:27.974 DEBUG in 'urllib3.connectionpool'['connectionpool'] at line 393: http://files.deeppavlov.ai:80 "GET /deeppavlov_data/squad_model_1.4_cpu_compatible.tar.gz.md5 HTTP/1.1" 200 389
+2018-12-10 05:26:28.580 DEBUG in 'urllib3.connectionpool'['connectionpool'] at line 205: Starting new HTTP connection (1): files.deeppavlov.ai:80
+2018-12-10 05:26:28.647 DEBUG in 'urllib3.connectionpool'['connectionpool'] at line 393: http://files.deeppavlov.ai:80 "GET /deeppavlov_data/squad_model_1.4_cpu_compatible.tar.gz HTTP/1.1" 200 222203159
+2018-12-10 05:26:28.647 INFO in 'deeppavlov.core.data.utils'['utils'] at line 63: Downloading from http://files.deeppavlov.ai/deeppavlov_data/squad_model_1.4_cpu_compatible.tar.gz to /home/ubuntu/.deeppavlov/squad_model_1.4_cpu_compatible.tar.gz
+  0%|          | 0.00/222M [00:00<?, ?B/s]
+  4%|▍         | 9.14M/222M [00:00<00:02, 78.0MB/s]
+ 13%|█▎        | 28.8M/222M [00:00<00:02, 94.6MB/s]
+ 19%|█▉        | 41.9M/222M [00:00<00:01, 103MB/s] 
+ 31%|███       | 69.0M/222M [00:00<00:01, 127MB/s]
+ 40%|███▉      | 87.9M/222M [00:00<00:00, 141MB/s]
+ 51%|█████▏    | 114M/222M [00:00<00:00, 163MB/s] 
+ 63%|██████▎   | 139M/222M [00:00<00:00, 183MB/s]
+ 72%|███████▏  | 160M/222M [00:00<00:00, 183MB/s]
+ 81%|████████  | 180M/222M [00:00<00:00, 179MB/s]
+ 96%|█████████▌| 213M/222M [00:01<00:00, 208MB/s]
+100%|██████████| 222M/222M [00:01<00:00, 199MB/s]
+2018-12-10 05:26:29.764 INFO in 'deeppavlov.core.data.utils'['utils'] at line 201: Extracting /home/ubuntu/.deeppavlov/squad_model_1.4_cpu_compatible.tar.gz archive into /home/ubuntu/.deeppavlov/models
+2018-12-10 05:26:34.365 DEBUG in 'urllib3.connectionpool'['connectionpool'] at line 205: Starting new HTTP connection (1): files.deeppavlov.ai:80
+2018-12-10 05:26:34.412 DEBUG in 'urllib3.connectionpool'['connectionpool'] at line 393: http://files.deeppavlov.ai:80 "GET /embeddings/wiki-news-300d-1M.vec.md5 HTTP/1.1" 200 56
+2018-12-10 05:26:38.738 INFO in 'deeppavlov.download'['download'] at line 115: Skipped http://files.deeppavlov.ai/embeddings/wiki-news-300d-1M.vec download because of matching hashes
+2018-12-10 05:26:38.739 DEBUG in 'urllib3.connectionpool'['connectionpool'] at line 205: Starting new HTTP connection (1): files.deeppavlov.ai:80
+2018-12-10 05:26:38.786 DEBUG in 'urllib3.connectionpool'['connectionpool'] at line 393: http://files.deeppavlov.ai:80 "GET /embeddings/wiki-news-300d-1M-char.vec.md5 HTTP/1.1" 200 61
+2018-12-10 05:26:38.802 INFO in 'deeppavlov.download'['download'] at line 115: Skipped http://files.deeppavlov.ai/embeddings/wiki-news-300d-1M-char.vec download because of matching hashes
+[nltk_data] Downloading package punkt to /home/ubuntu/nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+[nltk_data] Downloading package stopwords to /home/ubuntu/nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+[nltk_data] Downloading package perluniprops to
+[nltk_data]     /home/ubuntu/nltk_data...
+[nltk_data]   Package perluniprops is already up-to-date!
+[nltk_data] Downloading package nonbreaking_prefixes to
+[nltk_data]     /home/ubuntu/nltk_data...
+[nltk_data]   Package nonbreaking_prefixes is already up-to-date!
+2018-12-10 05:26:40.527 INFO in 'deeppavlov.models.preprocessors.squad_preprocessor'['squad_preprocessor'] at line 313: SquadVocabEmbedder: loading saved tokens vocab from /home/ubuntu/.deeppavlov/models/squad_model/emb/vocab_embedder.pckl
+2018-12-10 05:36:04.596 INFO in 'deeppavlov.models.preprocessors.squad_preprocessor'['squad_preprocessor'] at line 318: SquadVocabEmbedder: saving tokens vocab to /home/ubuntu/.deeppavlov/models/squad_model/emb/vocab_embedder.pckl
+2018-12-10 05:36:05.520 INFO in 'deeppavlov.models.preprocessors.squad_preprocessor'['squad_preprocessor'] at line 313: SquadVocabEmbedder: loading saved chars vocab from /home/ubuntu/.deeppavlov/models/squad_model/emb/char_vocab_embedder.pckl
+2018-12-10 05:46:05.501 INFO in 'deeppavlov.models.preprocessors.squad_preprocessor'['squad_preprocessor'] at line 318: SquadVocabEmbedder: saving chars vocab to /home/ubuntu/.deeppavlov/models/squad_model/emb/char_vocab_embedder.pckl
+2018-12-10 05:46:07.189534: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2018-12-10 05:46:16.953303: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:08:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-12-10 05:46:17.174250: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 1 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.582
+pciBusID: 0000:0b:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-12-10 05:46:17.175639: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0, 1
+2018-12-10 05:46:17.936125: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-12-10 05:46:17.936203: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 1 
+2018-12-10 05:46:17.936215: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N Y 
+2018-12-10 05:46:17.936224: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 1:   Y N 
+2018-12-10 05:46:17.936729: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10407 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:08:00.0, compute capability: 6.1)
+2018-12-10 05:46:17.937212: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 10407 MB memory) -> physical GPU (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:0b:00.0, compute capability: 6.1)
+2018-12-10 05:46:17.942865: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0, 1
+2018-12-10 05:46:17.942999: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-12-10 05:46:17.943032: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 1 
+2018-12-10 05:46:17.943052: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N Y 
+2018-12-10 05:46:17.943072: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 1:   Y N 
+2018-12-10 05:46:17.944026: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/device:GPU:0 with 10407 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:08:00.0, compute capability: 6.1)
+2018-12-10 05:46:17.944366: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/device:GPU:1 with 10407 MB memory) -> physical GPU (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:0b:00.0, compute capability: 6.1)
+Using TensorFlow backend.
+2018-12-10 05:46:22.541089: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0, 1
+2018-12-10 05:46:22.541220: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-12-10 05:46:22.541235: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 1 
+2018-12-10 05:46:22.541244: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N Y 
+2018-12-10 05:46:22.541251: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 1:   Y N 
+2018-12-10 05:46:22.541703: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10407 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:08:00.0, compute capability: 6.1)
+2018-12-10 05:46:22.541903: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:1 with 10407 MB memory) -> physical GPU (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:0b:00.0, compute capability: 6.1)
+2018-12-10 05:46:23.408 WARNING in 'tensorflow'['tf_logging'] at line 125: From /home/ubuntu/UHack/DeepPavlov/deeppavlov/core/layers/tf_layers.py:809: calling reverse_sequence (from tensorflow.python.ops.array_ops) with seq_dim is deprecated and will be removed in a future version.
+Instructions for updating:
+seq_dim is deprecated, use seq_axis instead
+2018-12-10 05:46:23.408 WARNING in 'tensorflow'['tf_logging'] at line 125: From /home/ubuntu/miniconda3/envs/py36/lib/python3.6/site-packages/tensorflow/python/util/deprecation.py:488: calling reverse_sequence (from tensorflow.python.ops.array_ops) with batch_dim is deprecated and will be removed in a future version.
+Instructions for updating:
+batch_dim is deprecated, use batch_axis instead
+2018-12-10 05:46:25.71 WARNING in 'tensorflow'['tf_logging'] at line 125: From /home/ubuntu/UHack/DeepPavlov/deeppavlov/models/squad/squad.py:218: softmax_cross_entropy_with_logits (from tensorflow.python.ops.nn_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+
+Future major versions of TensorFlow will allow gradients to flow
+into the labels input on backprop by default.
+
+See `tf.nn.softmax_cross_entropy_with_logits_v2`.
+
+2018-12-10 05:46:30.582 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 43: [loading model from /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 05:46:31.209 INFO in 'tensorflow'['tf_logging'] at line 115: Restoring parameters from /home/ubuntu/.deeppavlov/models/squad_model/model
+2018-12-10 05:48:19.182 INFO in 'deeppavlov.core.commands.train'['train'] at line 363: New best squad_f1 of 45.9995
+2018-12-10 05:48:19.182 INFO in 'deeppavlov.core.commands.train'['train'] at line 365: Saving model
+2018-12-10 05:48:19.183 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 05:48:21.288 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
+2018-12-10 06:40:42.440 INFO in 'deeppavlov.core.commands.train'['train'] at line 571: New best squad_f1 of 58.6375
+2018-12-10 06:40:42.440 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
+2018-12-10 06:40:42.440 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 06:40:44.504 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
+2018-12-10 07:33:14.74 INFO in 'deeppavlov.core.commands.train'['train'] at line 571: New best squad_f1 of 63.703
+2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
+2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 07:33:16.311 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
