@@ -1,0 +1,3 @@
+clone https://github.com/deepmipt/DeepPavlov.git
+cd DeepPavlov
+python -m deeppavlov train  deeppavlov/configs/squad/squad.json -d
