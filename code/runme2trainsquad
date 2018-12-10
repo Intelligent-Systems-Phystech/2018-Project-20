@@ -1,3 +1,8 @@
+#first we should copy deeppavlov and install Deeppavlov NLP framwork
 clone https://github.com/deepmipt/DeepPavlov.git
-cd DeepPavlov
+
+cd DeepPavlov #go to the folder
+
+#then we shold replace squad dataset for our dataset. Usualy dataset location in ~/.deeppavlov/download/ 
+#and run deeppavlov 
 python -m deeppavlov train  deeppavlov/configs/squad/squad.json -d
