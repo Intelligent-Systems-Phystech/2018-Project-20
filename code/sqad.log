@@ -95,3 +95,31 @@ See `tf.nn.softmax_cross_entropy_with_logits_v2`.
 2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
 2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
 2018-12-10 07:33:16.311 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
+2018-12-10 07:33:14.74 INFO in 'deeppavlov.core.commands.train'['train'] at line 571: New best squad_f1 of 63.703
+2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
+2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 07:33:16.311 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
+2018-12-10 07:33:14.74 INFO in 'deeppavlov.core.commands.train'['train'] at line 571: New best squad_f1 of 63.703
+2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
+2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 03:57:25.35 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
+2018-12-10 03:57:24.35 INFO in 'deeppavlov.core.commands.train'['train'] at line 571: New best squad_f1 of 63.703
+2018-12-10 03:57:24.35 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
+2018-12-10 03:57:24.35 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 04:51:38.89 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
+2018-12-10 04:51:40.19 INFO in 'deeppavlov.core.commands.train'['train'] at line 571: New best squad_f1 of 63.703
+2018-12-10 04:51:40.19 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
+2018-12-10 04:51:40.19 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 05:45:32.03 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
+2018-12-10 05:45:33.62 INFO in 'deeppavlov.core.commands.train'['train'] at line 571: New best squad_f1 of 63.703
+2018-12-10 05:45:33.62 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
+2018-12-10 05:45:33.63 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 06:35:23.14 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
+2018-12-10 06:35:25.35 INFO in 'deeppavlov.core.commands.train'['train'] at line 571: New best squad_f1 of 63.703
+2018-12-10 06:35:25.35 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
+2018-12-10 06:35:25.35 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 07:33:16.311 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
+2018-12-10 07:33:14.74 INFO in 'deeppavlov.core.commands.train'['train'] at line 571: New best squad_f1 of 63.703
+2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.commands.train'['train'] at line 573: Saving model
+2018-12-10 07:33:14.75 INFO in 'deeppavlov.core.models.tf_model'['tf_model'] at line 52: [saving model to /home/ubuntu/.deeppavlov/models/squad_model/model]
+2018-12-10 07:33:16.311 INFO in 'deeppavlov.models.squad.squad'['squad'] at line 346: SQuAD model: lr_impatience: 0, learning_rate: 0.5
